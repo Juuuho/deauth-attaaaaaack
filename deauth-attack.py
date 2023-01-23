@@ -32,7 +32,6 @@ def Hopping(args):
 
 
 if __name__ == '__main__':
-
     argu = sys.argv
     del argu[0]
     print(f'Argument : {argu}')
@@ -48,5 +47,5 @@ if __name__ == '__main__':
     elif argu_len == 4:
         Auth_Attack(argu)
     else:
-        print("syntax : deauth-attack <interface> <ap mac> [<station mac> [-auth]]\nsample : deauth-attack mon0 00:11:22:33:44:55 66:77:88:99:AA:BB")
+        print("syntax : deauth-attack <interface> <ap mac> [<station mac> [-auth]]\nsample : deauth-attack mon0 00:11:22:33:44:55 66:77:88:99:AA:BB -auth")
         quit()
